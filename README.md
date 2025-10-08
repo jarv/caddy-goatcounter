@@ -189,8 +189,33 @@ MIT License - see LICENSE file for details.
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Test with the Docker Compose setup
+4. Test with the Docker Compose setup: `mise run test`
 5. Submit a pull request
+
+### Commit Convention
+
+This project uses [Conventional Commits](https://www.conventionalcommits.org/) for automatic semantic versioning and changelog generation:
+
+- `feat:` - New features (minor version bump)
+- `fix:` - Bug fixes (patch version bump)
+- `perf:` - Performance improvements (patch version bump)
+- `refactor:` - Code refactoring (patch version bump)
+- `build:` - Build system changes (patch version bump)
+- `docs:` - Documentation only changes (no release)
+- `test:` - Test changes (no release)
+- `ci:` - CI configuration changes (no release)
+- `chore:` - Other changes (no release)
+
+Add `BREAKING CHANGE:` in the commit body for major version bumps.
+
+### Release Process
+
+Releases are automated using [semantic-release](https://semantic-release.gitbook.io/):
+
+1. Push commits with conventional commit messages to `main` branch
+2. GitHub Actions automatically analyzes commits and creates releases
+3. Generates changelog and version tags
+4. Uploads compiled Caddy binary as release asset
 
 ## Support
 

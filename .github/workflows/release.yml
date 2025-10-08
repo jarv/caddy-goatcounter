@@ -15,28 +15,49 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Set up Go
-        uses: actions/setup-go@v6
-        with:
-          go-version: '1.25.1'
+      - name: Install mise
+        uses: jdx/mise-action@v2
+
+      - name: Install tools via mise
+        run: mise install
 
       - name: Set up Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
 
-      - name: Install mise
-        run: curl https://mise.run | sh && echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
 
-      - name: Install mise tools
-        run: mise install
+      - name: Install semantic-release and plugins
+        run: |
+          npm install -g \
+            semantic-release \
+            @semantic-release/git \
+            @semantic-release/changelog \
+            @semantic-release/exec \
+            @semantic-release/github \
+            @semantic-release/commit-analyzer \
+            @semantic-release/release-notes-generator \
+            conventional-changelog-conventionalcommits
 
-      - name: Install semantic-release
-        run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog @semantic-release/exec
+      - name: Run linting
+        run: mise run golangci-lint
+
+      - name: Build Caddy with GoatCounter module
+        run: mise run build
+
+      - name: Verify module is loaded
+        run: ./caddy list-modules | grep goatcounter
 
       - name: Run semantic-release
         env:

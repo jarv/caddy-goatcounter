@@ -18,27 +18,27 @@ run = "xcaddy build --with github.com/jarv/caddy-goatcounter=./"
 
 [tasks.docker-build]
 description = "Build Docker image with GoatCounter module"
-run = "docker-compose build"
+run = "docker compose build"
 
 [tasks.start]
 description = "Start test environment with Docker Compose"
-run = "docker-compose up -d"
+run = "docker compose up -d"
 
 [tasks.stop]
 description = "Stop test environment"
-run = "docker-compose down"
+run = "docker compose down"
 
 [tasks.logs]
 description = "Show all service logs"
-run = "docker-compose logs"
+run = "docker compose logs"
 
 [tasks.logs-caddy]
 description = "Show Caddy logs"
-run = "docker-compose logs caddy"
+run = "docker compose logs caddy"
 
 [tasks.logs-goatcounter]
 description = "Show GoatCounter mock logs"
-run = "docker-compose logs goatcounter-mock"
+run = "docker compose logs goatcounter-mock"
 
 [tasks.test]
 description = "Run comprehensive tests of the GoatCounter module"
@@ -46,7 +46,7 @@ run = [
     "echo '🧪 Testing Caddy GoatCounter Module'",
     "echo '=================================='",
     "echo '🚀 Starting services...'",
-    "docker-compose up -d",
+    "docker compose up -d",
     "echo '⏳ Waiting for services to start...'",
     "sleep 5",
     "echo ''",
@@ -62,7 +62,7 @@ run = [
     "echo '✅ Untracked endpoint tested'",
     "echo ''",
     "echo '📋 Recent GoatCounter mock requests:'",
-    "docker-compose logs --tail=10 goatcounter-mock",
+    "docker compose logs --tail=10 goatcounter-mock",
     "echo ''",
     "echo '🔧 To view detailed logs: mise run logs'",
     "echo '🔧 To stop services: mise run stop'"
@@ -92,7 +92,7 @@ run = [
 [tasks.clean]
 description = "Clean up Docker resources"
 run = [
-    "docker-compose down --volumes --remove-orphans",
+    "docker compose down --volumes --remove-orphans",
     "docker system prune -f"
 ]
 

@@ -1,0 +1,112 @@
+[settings]
+experimental = true
+
+[tools]
+golang = "1.25.1"
+golangci-lint = "2.5.0"
+shellcheck = "0.11.0"
+shfmt = "3.12.0"
+vale = "3.3.0"
+"go:github.com/caddyserver/xcaddy/cmd/xcaddy" = "latest"
+
+[tasks.golangci-lint]
+run = "golangci-lint run ./..."
+
+[tasks.build]
+description = "Build Caddy with GoatCounter module"
+run = "xcaddy build --with github.com/jarv/caddy-goatcounter=./"
+
+[tasks.docker-build]
+description = "Build Docker image with GoatCounter module"
+run = "docker-compose build"
+
+[tasks.start]
+description = "Start test environment with Docker Compose"
+run = "docker-compose up -d"
+
+[tasks.stop]
+description = "Stop test environment"
+run = "docker-compose down"
+
+[tasks.logs]
+description = "Show all service logs"
+run = "docker-compose logs"
+
+[tasks.logs-caddy]
+description = "Show Caddy logs"
+run = "docker-compose logs caddy"
+
+[tasks.logs-goatcounter]
+description = "Show GoatCounter mock logs"
+run = "docker-compose logs goatcounter-mock"
+
+[tasks.test]
+description = "Run comprehensive tests of the GoatCounter module"
+run = [
+    "echo '🧪 Testing Caddy GoatCounter Module'",
+    "echo '=================================='",
+    "echo '🚀 Starting services...'",
+    "docker-compose up -d",
+    "echo '⏳ Waiting for services to start...'",
+    "sleep 5",
+    "echo ''",
+    "echo '📊 Testing tracked endpoints:'",
+    "echo 'Testing /rss endpoint...'",
+    "curl -s -H 'User-Agent: TestBot/1.0' -H 'Referer: https://example.com' http://localhost:8080/rss > /dev/null",
+    "echo '✅ RSS endpoint tested'",
+    "echo 'Testing /api/feeds endpoint...'",
+    "curl -s -H 'User-Agent: FeedReader/2.0' http://localhost:8080/api/feeds > /dev/null",
+    "echo '✅ API feeds endpoint tested'",
+    "echo 'Testing untracked endpoint...'",
+    "curl -s -H 'User-Agent: Browser/3.0' http://localhost:8080/untracked > /dev/null",
+    "echo '✅ Untracked endpoint tested'",
+    "echo ''",
+    "echo '📋 Recent GoatCounter mock requests:'",
+    "docker-compose logs --tail=10 goatcounter-mock",
+    "echo ''",
+    "echo '🔧 To view detailed logs: mise run logs'",
+    "echo '🔧 To stop services: mise run stop'"
+]
+
+[tasks.test-rss]
+description = "Test RSS endpoint tracking"
+run = [
+    "echo 'Testing RSS endpoint...'",
+    "curl -v -H 'User-Agent: RSSReader/1.0' -H 'Referer: https://feedburner.com' http://localhost:8080/rss"
+]
+
+[tasks.test-api]
+description = "Test API endpoint tracking"
+run = [
+    "echo 'Testing API endpoint...'",
+    "curl -v -H 'User-Agent: APIClient/2.0' http://localhost:8080/api/feeds"
+]
+
+[tasks.test-untracked]
+description = "Test untracked endpoint (should not be tracked)"
+run = [
+    "echo 'Testing untracked endpoint...'",
+    "curl -v -H 'User-Agent: Browser/1.0' http://localhost:8080/untracked"
+]
+
+[tasks.clean]
+description = "Clean up Docker resources"
+run = [
+    "docker-compose down --volumes --remove-orphans",
+    "docker system prune -f"
+]
+
+[tasks.dev]
+description = "Start development environment"
+depends = ["start"]
+run = [
+    "echo 'Development environment started!'",
+    "echo 'Test endpoints:'",
+    "echo '  http://localhost:8080/rss (tracked)'",
+    "echo '  http://localhost:8080/api/feeds (tracked)'",
+    "echo '  http://localhost:8080/untracked (not tracked)'",
+    "echo ''",
+    "echo 'Use \"mise run test\" to run automated tests'",
+    "echo 'Use \"mise run logs\" to view logs'",
+    "echo 'Use \"mise run stop\" to stop services'"
+]

@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  caddy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./test-content:/var/www/html:ro
+    environment:
+      - CADDY_LOG_LEVEL=DEBUG
+    depends_on:
+      - goatcounter-mock
+
+  goatcounter-mock:
+    image: nginx:alpine
+    ports:
+      - "8081:80"
+    volumes:
+      - ./mock-goatcounter.conf:/etc/nginx/nginx.conf:ro
+    command: ["nginx", "-g", "daemon off;"]
+
+volumes:
+  caddy_data:
+  caddy_config:

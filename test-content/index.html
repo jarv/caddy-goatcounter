@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Caddy GoatCounter Test</title>
+</head>
+<body>
+    <h1>Caddy GoatCounter Module Test</h1>
+    <p>This is a test page for the Caddy GoatCounter module.</p>
+
+    <h2>Test Links</h2>
+    <ul>
+        <li><a href="/rss">RSS Feed (tracked)</a></li>
+        <li><a href="/api/feeds">API Feeds (tracked)</a></li>
+        <li><a href="/untracked">Untracked Page</a></li>
+    </ul>
+
+    <h2>Manual Testing</h2>
+    <p>Use curl to test tracking:</p>
+    <pre>
+curl -H "User-Agent: TestBot/1.0" http://localhost:8080/rss
+curl -H "User-Agent: FeedReader/2.0" http://localhost:8080/api/feeds
+    </pre>
+</body>
+</html>

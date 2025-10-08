@@ -1,0 +1,23 @@
+{
+    log {
+        level DEBUG
+    }
+    admin off
+    order goatcounter before file_server
+}
+
+:80 {
+    goatcounter {
+        api_host http://goatcounter-mock
+        site mysite.goatcounter.com
+        paths /rss /api/feeds
+        user_agent "CaddyGoatCounter/1.0"
+    }
+
+    root * /var/www/html
+    file_server
+
+    route /api/* {
+        respond "API Response: {path}"
+    }
+}

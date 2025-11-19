@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/jarv/caddy-goatcounter/compare/v1.0.0...v1.0.1) (2025-11-19)
+
+### 🐛 Bug Fixes
+
+* **deps:** update module go.uber.org/zap to v1.27.1 ([#27](https://github.com/jarv/caddy-goatcounter/issues/27)) ([26737d5](https://github.com/jarv/caddy-goatcounter/commit/26737d5546283d486350b946626c510ef43b48ef))
+
 ## 1.0.0 (2025-10-09)
 
 ### 🐛 Bug Fixes

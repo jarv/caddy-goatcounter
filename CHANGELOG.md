@@ -1,3 +1,9 @@
+## [1.0.5](https://github.com/jarv/caddy-goatcounter/compare/v1.0.4...v1.0.5) (2026-05-15)
+
+### 🐛 Bug Fixes
+
+* **deps:** update module github.com/caddyserver/caddy/v2 to v2.11.3 ([#90](https://github.com/jarv/caddy-goatcounter/issues/90)) ([b6b0184](https://github.com/jarv/caddy-goatcounter/commit/b6b01842bf9681a669936ff4a0fcc4c5c6a9bc60))
+
 ## [1.0.4](https://github.com/jarv/caddy-goatcounter/compare/v1.0.3...v1.0.4) (2026-04-28)
 
 ### 🐛 Bug Fixes

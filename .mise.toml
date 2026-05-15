@@ -6,7 +6,7 @@ golang = "1.26.3"
 golangci-lint = "2.12.2"
 shellcheck = "0.11.0"
 shfmt = "3.13.1"
-vale = "3.14.1"
+vale = "3.14.2"
 "go:github.com/caddyserver/xcaddy/cmd/xcaddy" = "latest"
 
 [tasks.golangci-lint]

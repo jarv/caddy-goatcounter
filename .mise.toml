@@ -2,7 +2,7 @@
 experimental = true
 
 [tools]
-golang = "1.26.7"
+golang = "1.27.0"
 golangci-lint = "2.13.1"
 shellcheck = "0.11.0"
 shfmt = "3.13.1"
